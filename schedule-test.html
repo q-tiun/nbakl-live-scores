@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NBA Karma Schedule Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: white;
+      padding: 20px;
+    }
+    h2 {
+      color: #f5c518;
+    }
+    #schedule-list {
+      list-style: none;
+      padding: 0;
+    }
+    #schedule-list li {
+      padding: 8px;
+      border-bottom: 1px solid #333;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📅 Upcoming Games</h2>
+  <ul id="schedule-list"></ul>
+
+  <script>
+    async function loadSchedule() {
+      try {
+        const res = await fetch('schedule.json');
+        const games = await res.json();
+        const list = document.getElementById('schedule-list');
+        list.innerHTML = '';
+
+        games.forEach(g => {
+          const li = document.createElement('li');
+          li.textContent = `${g.date} | ${g.teams}`;
+          list.appendChild(li);
+        });
+      } catch (err) {
+        console.error('Error loading schedule:', err);
+      }
+    }
+    loadSchedule();
+  </script>
+
+</body>
+</html>
